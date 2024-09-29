@@ -1,0 +1,43 @@
+def count_frogs(s, start_indices, end_indices):
+    n = len(s)
+    result = []
+
+    # Precompute prefix sums of '*' and left/right bars
+    prefix_stars = [0] * (n + 1)
+    left_bars = [-1] * n
+    right_bars = [-1] * n
+
+    for i in range(n):
+        prefix_stars[i + 1] = prefix_stars[i] + (s[i] == '*')
+        if s[i] == '|':
+            left_bars[i] = i
+        elif i > 0:
+            left_bars[i] = left_bars[i - 1]
+
+    for i in range(n - 1, -1, -1):
+        if s[i] == '|':
+            right_bars[i] = i
+        elif i < n - 1:
+            right_bars[i] = right_bars[i + 1]
+
+    # Process each query
+    for start, end in zip(start_indices, end_indices):
+        start -= 1  # Convert to 0-indexed
+        end -= 1    # Convert to 0-indexed
+        left = right_bars[start]
+        right = left_bars[end]
+
+        if left != -1 and right != -1 and left < right:
+            result.append(prefix_stars[right + 1] - prefix_stars[left + 1])
+        else:
+            result.append(0)
+
+    return list(set(result))  # Return unique results
+
+# Input handling
+s = input("Enter the string of frogs (*) and stones (|): ")
+start_indices = list(map(int, input("Enter start indices (comma-separated): ").split(',')))
+end_indices = list(map(int, input("Enter end indices (comma-separated): ").split(',')))
+
+# Output the result
+print(count_frogs(s, start_indices, end_indices))
