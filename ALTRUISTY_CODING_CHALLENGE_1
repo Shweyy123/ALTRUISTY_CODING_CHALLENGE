@@ -1,0 +1,19 @@
+def maxProfit(prices):
+    min_price = float('inf')
+    max_profit = 0
+
+    for price in prices:
+        min_price = min(min_price, price)
+        max_profit = max(max_profit, price - min_price)
+
+    return max_profit
+
+# Taking input from the user 
+input_str = input(" ")
+
+# Process the input to extract the list of prices
+n, prices_str = input_str.split(',', 1)
+prices = list(map(int, prices_str.strip('[] ').split(',')))
+
+# Output the maximum profit
+print(maxProfit(prices))
