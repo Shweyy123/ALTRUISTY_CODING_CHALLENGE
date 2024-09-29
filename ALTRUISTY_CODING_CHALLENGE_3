@@ -1,0 +1,10 @@
+def max_of_min_subarrays(arr, k):
+    return max(min(arr[i:i + k]) for i in range(len(arr) - k + 1))
+
+# Input handling
+k = int(input("Enter the length of segment (k): "))
+n = int(input("Enter the size of space (n): "))
+arr = list(map(int, input(f"Enter {n} elements of the array (space-separated): ").split()))
+
+# Call the function and print the result
+print(max_of_min_subarrays(arr, k))
