@@ -1,0 +1,29 @@
+def main():
+    trainees = 3
+    rounds = 3
+    oxygen_levels = []
+
+    # Input oxygen levels for all trainees in a single line for each round
+    for round_num in range(rounds):
+        levels = list(map(int, input(f"Enter oxygen values for trainees in round {round_num + 1} (space-separated): ").split()))
+        # Check for invalid input
+        if any(oxygen < 1 or oxygen > 100 for oxygen in levels):
+            print("INVALID INPUT")
+            return
+        oxygen_levels.append(levels)
+
+    # Calculate average oxygen levels for each trainee
+    averages = [round(sum(oxygen_levels[round][trainee] for round in range(rounds)) / rounds) for trainee in range(trainees)]
+
+    # Determine the most fit trainee(s)
+    highest_avg = max(averages)
+    if highest_avg < 70:
+        print("All trainees are unfit")
+    else:
+        for i in range(trainees):
+            if averages[i] == highest_avg:
+                print(f"Trainee Number: {i + 1}")
+        print(f"Highest Average Oxygen Level: {highest_avg}")
+
+if __name__ == "__main__":
+    main()
