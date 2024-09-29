@@ -1,0 +1,24 @@
+def find_odd_balloon_color(n, balloons):
+    color_count = {}
+
+    # Count occurrences of each color
+    for color in balloons:
+        color_count[color] = color_count.get(color, 0) + 1
+
+    # Find the first color with an odd count
+    for color in balloons:
+        if color_count[color] % 2 != 0:
+            return f"{color} -> '{color}' colour balloon is present odd number of times in the bunch."
+
+    return "All are even"
+
+# Input handling
+n = int(input("Enter the number of balloons (N): "))
+balloons = input("Enter the colors of the balloons (space-separated): ").split()
+
+# Ensure the number of balloons matches the provided count
+if len(balloons) != n:
+    print(f"Warning: Expected {n} colors but received {len(balloons)} colors.")
+
+# Print the result
+print(find_odd_balloon_color(n, balloons))
